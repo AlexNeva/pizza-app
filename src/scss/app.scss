@@ -14,6 +14,14 @@ body {
   margin: 50px auto;
   border-radius: 10px;
   max-width: 1400px;
+
+  @media (max-width: 768px) {
+    width: calc(100vw - 50px);
+    margin: 25px auto;
+  }
+  @media (max-width: 576px) {
+    width: calc(100vw - 20px);
+  }
 }
 
 .content {
@@ -31,8 +39,11 @@ body {
 
   &__top {
     display: flex;
-    align-items: center;
     justify-content: space-between;
+
+    @media (max-width: 992px) {
+      flex-direction: column;
+    }
   }
 }
 
