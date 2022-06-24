@@ -1,4 +1,5 @@
 import React from "react";
+import classes from "./pizza.module.scss";
 
 const Pizza = ({ title, price, imageUrl }) => {
   const [count, setCount] = React.useState(0);
@@ -7,30 +8,30 @@ const Pizza = ({ title, price, imageUrl }) => {
     setCount((prevCount) => (prevCount += 1));
   };
   return (
-    <div className="pizza-block">
+    <div className={classes.pizza}>
       <img
         width={260}
         height={260}
-        className="pizza-block__image"
+        className={classes.image}
         src={imageUrl}
         alt="Pizza"
       />
-      <h4 className="pizza-block__title">{title}</h4>
-      <div className="pizza-block__selector">
+      <h4 className={classes.title}>{title}</h4>
+      <div className={classes.selector}>
         <ul>
-          <li className="active">тонкое</li>
+          <li className={classes.active}>тонкое</li>
           <li>традиционное</li>
         </ul>
         <ul>
-          <li className="active">26 см.</li>
+          <li className={classes.active}>26 см.</li>
           <li>30 см.</li>
           <li>40 см.</li>
         </ul>
       </div>
-      <div className="pizza-block__bottom">
-        <div className="pizza-block__price">от {price} ₽</div>
+      <div className={classes.footer}>
+        <div className={classes.price}>от {price} ₽</div>
         <button
-          className="button button--outline button--add"
+          className={`button button--outline ${classes.addBtn}`}
           onClick={addPizza}
         >
           <svg

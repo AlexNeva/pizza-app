@@ -1,4 +1,5 @@
 import React from "react";
+import classes from "./sort.module.scss";
 
 const Sort = () => {
   const [isVisible, setVisible] = React.useState(false);
@@ -12,8 +13,8 @@ const Sort = () => {
   };
 
   return (
-    <div className="sort">
-      <div className="sort__label">
+    <div className={classes.sort}>
+      <div className={classes.label}>
         <svg
           width="10"
           height="6"
@@ -30,12 +31,12 @@ const Sort = () => {
         <span onClick={() => setVisible((open) => !open)}>{currentItem}</span>
       </div>
       {isVisible && (
-        <div className="sort__popup">
+        <div className={classes.popup}>
           <ul>
             {list.map((title, index) => (
               <li
                 key={title}
-                className={selected === index ? "active" : null}
+                className={selected === index ? classes.active : ""}
                 onClick={() => listItemsClickHandler(index)}
               >
                 {title}

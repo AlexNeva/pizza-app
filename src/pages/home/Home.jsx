@@ -1,5 +1,6 @@
 import React from "react";
-import { Categories, Sort, PizzaSkeleton, Pizza } from "../components";
+import { Categories, Sort, PizzaSkeleton, Pizza } from "../../components";
+import classes from "./home.module.scss";
 
 const Home = () => {
   const [items, setItems] = React.useState([]);
@@ -15,12 +16,12 @@ const Home = () => {
   }, []);
   return (
     <>
-      <div className="content__top">
+      <div className={classes.top}>
         <Categories />
         <Sort />
       </div>
-      <h2 className="content__title">Все пиццы</h2>
-      <div className="content__items">
+      <h1 className="pageTitle">Все пиццы</h1>
+      <div className={classes.items}>
         {isLoading
           ? [...new Array(8)].map((_, index) => <PizzaSkeleton key={index} />)
           : items.map((item) => <Pizza key={item.id} {...item} />)}

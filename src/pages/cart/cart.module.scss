@@ -1,0 +1,72 @@
+@import "../../scss//variables";
+@import "../../scss//mixins";
+
+.top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.clearBtn {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+
+  span {
+    margin-left: 0.5em;
+    color: #b6b6b6;
+    font-size: 1.125rem;
+  }
+
+  svg {
+    margin-bottom: 0.2rem;
+    color: $danger;
+  }
+
+  span,
+  svg,
+  path {
+    transition: all $duration ease-in-out;
+  }
+
+  &:hover {
+    svg {
+      path {
+        stroke: darken($color: #b6b6b6, $amount: 50);
+      }
+    }
+    span {
+      color: darken($color: #b6b6b6, $amount: 50);
+    }
+  }
+}
+
+.bottom {
+  margin: 50px 0;
+}
+
+.details {
+  display: flex;
+  justify-content: space-between;
+
+  span {
+    @include px-to-rem(22);
+
+    &:last-of-type {
+      b {
+        color: $orange;
+      }
+    }
+  }
+}
+
+.buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 2.5rem;
+}
+
+.back,
+.pay {
+  font-size: 1.25rem;
+}

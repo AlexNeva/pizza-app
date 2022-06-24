@@ -1,0 +1,123 @@
+@import "../../scss/variables";
+@import "../../scss/mixins";
+
+.item {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  border-top: 1px solid $gray-line;
+  padding-top: 1.875rem;
+  margin-top: 1.875rem;
+}
+
+.image {
+  display: flex;
+  align-items: center;
+  margin-right: 1rem;
+  width: 10%;
+
+  img {
+    width: 5rem;
+    height: 5rem;
+  }
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 40%;
+
+  h3 {
+    font-weight: 700;
+    font-size: 1.375rem;
+    letter-spacing: 0.01em;
+  }
+
+  p {
+    font-size: 1.125rem;
+    color: #8d8d8d;
+  }
+}
+
+.count {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 13%;
+
+  &-minus {
+    svg {
+      path:first-of-type {
+        display: none;
+      }
+    }
+  }
+
+  b {
+    @include px-to-rem(22);
+  }
+}
+
+.price {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 33%;
+
+  b {
+    font-weight: 700;
+    @include px-to-rem(22);
+    letter-spacing: 0.01em;
+  }
+}
+
+.changeBtn,
+.removeItem {
+  cursor: pointer;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  border: 0.125rem solid;
+  border-color: currentColor;
+  transition: background-color $duration ease-in-out 0s,
+    color $duration ease-in-out 0s;
+}
+
+.changeBtn {
+  color: $orange;
+  border-color: currentColor;
+
+  &:hover {
+    background-color: $orange;
+    color: #fff;
+  }
+
+  &:active {
+    background-color: darken($orange, 12%);
+    transform: translateY(1px);
+  }
+}
+
+.removeItem {
+  color: $light-gray;
+  border-color: currentColor;
+
+  svg {
+    transform: rotate(45deg);
+  }
+
+  &:hover {
+    background-color: $danger;
+    color: #fff;
+  }
+
+  &:active {
+    background-color: darken($danger, 12%);
+    transform: translateY(1px);
+  }
+}
