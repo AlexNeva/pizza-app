@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { CartItem } from "../../components";
 import classes from "./cart.module.scss";
 
@@ -33,9 +34,9 @@ const Cart = () => {
           </span>
         </div>
         <div className={classes.buttons}>
-          <a href="/" className={`${classes.back} button button--outline`}>
+          <Link to="/" className={`${classes.back} button button--outline`}>
             Вернуться назад
-          </a>
+          </Link>
           <button className={`${classes.pay} button`}>Оплатить сейчас</button>
         </div>
       </div>
