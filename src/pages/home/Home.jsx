@@ -9,14 +9,16 @@ const Home = () => {
     name: "популяности",
     sortType: "rating",
   });
+  const [categoryId, setCategoryId] = React.useState(0);
 
   React.useEffect(() => {
     setIsLoading(true);
     const sortBy = sort.sortType.replace("-", "");
     const order = sort.sortType.includes("-") ? "asc" : "desc";
+    const category = categoryId ? `category=${categoryId}` : "";
 
     fetch(
-      `https://62b208e0c7e53744afc67927.mockapi.io/items?sortBy=${sortBy}&order=${order}`
+      `https://62b208e0c7e53744afc67927.mockapi.io/items?${category}&sortBy=${sortBy}&order=${order}`
     )
       .then((res) => res.json())
       .then((arr) => {
@@ -25,11 +27,11 @@ const Home = () => {
       });
 
     window.scrollTo(0, 0);
-  }, [sort.sortType]);
+  }, [sort.sortType, categoryId]);
   return (
     <>
       <div className={classes.top}>
-        <Categories />
+        <Categories setCategoryHandler={(id) => setCategoryId(id)} />
         <Sort setSortHandler={(obj) => setSort(obj)} />
       </div>
       <h1 className="pageTitle">Все пиццы</h1>

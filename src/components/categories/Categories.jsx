@@ -1,11 +1,12 @@
 import React from "react";
 import classes from "./categories.module.scss";
 
-const Categories = () => {
+const Categories = ({ setCategoryHandler }) => {
   const [activeCategory, setActiveCategory] = React.useState(0);
 
   const changeCategory = (idx) => {
     setActiveCategory(idx);
+    setCategoryHandler(idx);
   };
 
   const categories = [
