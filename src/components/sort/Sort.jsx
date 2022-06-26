@@ -1,13 +1,21 @@
 import React from "react";
 import classes from "./sort.module.scss";
 
-const Sort = () => {
+const Sort = ({ setSortHandler }) => {
   const [isVisible, setVisible] = React.useState(false);
   const [selected, setSelected] = React.useState(0);
-  const list = ["популярности", "цене", "алфавиту"];
-  const currentItem = list[selected];
+  const list = [
+    { name: "↑ популярности", sortType: "rating" },
+    { name: "↓ популярности", sortType: "-rating" },
+    { name: "↑ цене", sortType: "price" },
+    { name: "↓ цене", sortType: "-price" },
+    { name: "↑ названию", sortType: "title" },
+    { name: "↓ названию", sortType: "-title" },
+  ];
+  const currentItem = list[selected].name;
 
-  const listItemsClickHandler = (index) => {
+  const listItemsClickHandler = (index, obj) => {
+    setSortHandler(obj);
     setSelected(index);
     setVisible(false);
   };
@@ -33,13 +41,13 @@ const Sort = () => {
       {isVisible && (
         <div className={classes.popup}>
           <ul>
-            {list.map((title, index) => (
+            {list.map((obj, index) => (
               <li
-                key={title}
+                key={obj.name}
                 className={selected === index ? classes.active : ""}
-                onClick={() => listItemsClickHandler(index)}
+                onClick={() => listItemsClickHandler(index, obj)}
               >
-                {title}
+                {obj.name}
               </li>
             ))}
           </ul>
