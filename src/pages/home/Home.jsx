@@ -5,16 +5,19 @@ import {
   PizzaSkeleton,
   Pizza,
   Search,
+  Pagination,
 } from "../../components";
 import classes from "./home.module.scss";
 
 const Home = () => {
   const [items, setItems] = React.useState([]);
+  const [itemsCount, setItemsCount] = React.useState(0);
   const [isLoading, setIsLoading] = React.useState(true);
   const [sort, setSort] = React.useState({
     name: "популяности",
     sortType: "rating",
   });
+  const [pageNum, setPageNum] = React.useState(1);
   const [categoryId, setCategoryId] = React.useState(0);
 
   const [searchValue, setSearchValue] = React.useState("");
@@ -23,6 +26,8 @@ const Home = () => {
     obj.title.toLowerCase().includes(searchValue.toLocaleLowerCase())
   );
 
+  const pagesCount = Math.ceil(itemsCount / 8);
+
   React.useEffect(() => {
     setIsLoading(true);
     const sortBy = sort.sortType.replace("-", "");
@@ -30,16 +35,18 @@ const Home = () => {
     const category = categoryId ? `category=${categoryId}` : "";
 
     fetch(
-      `https://62b208e0c7e53744afc67927.mockapi.io/items?${category}&sortBy=${sortBy}&order=${order}`
+      `https://62b208e0c7e53744afc67927.mockapi.io/items?${category}&sortBy=${sortBy}&order=${order}&page=${pageNum}&limit=8`
     )
       .then((res) => res.json())
-      .then((arr) => {
-        setItems(arr);
+      .then(({ items, count }) => {
+        console.log(items);
+        setItems(items);
+        setItemsCount(count);
         setIsLoading(false);
       });
 
     window.scrollTo(0, 0);
-  }, [sort.sortType, categoryId]);
+  }, [sort.sortType, categoryId, pageNum]);
   return (
     <>
       <Search value={searchValue} setValue={setSearchValue} />
@@ -53,6 +60,7 @@ const Home = () => {
           ? [...new Array(8)].map((_, index) => <PizzaSkeleton key={index} />)
           : filteredItems.map((item) => <Pizza key={item.id} {...item} />)}
       </div>
+      <Pagination pages={pagesCount} setPage={setPageNum} />
     </>
   );
 };

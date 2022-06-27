@@ -5,5 +5,15 @@ import PizzaSkeleton from "./pizza/PizzaSkeleton";
 import Sort from "./sort/Sort";
 import CartItem from "./cart-item/CartItem";
 import Search from "./search/Search";
+import Pagination from "./pagination/Pagination";
 
-export { Categories, Header, Pizza, PizzaSkeleton, Sort, CartItem, Search };
+export {
+  Categories,
+  Header,
+  Pizza,
+  PizzaSkeleton,
+  Sort,
+  CartItem,
+  Search,
+  Pagination,
+};
