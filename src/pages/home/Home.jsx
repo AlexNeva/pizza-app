@@ -1,5 +1,11 @@
 import React from "react";
-import { Categories, Sort, PizzaSkeleton, Pizza } from "../../components";
+import {
+  Categories,
+  Sort,
+  PizzaSkeleton,
+  Pizza,
+  Search,
+} from "../../components";
 import classes from "./home.module.scss";
 
 const Home = () => {
@@ -10,6 +16,12 @@ const Home = () => {
     sortType: "rating",
   });
   const [categoryId, setCategoryId] = React.useState(0);
+
+  const [searchValue, setSearchValue] = React.useState("");
+
+  const filteredItems = items.filter((obj) =>
+    obj.title.toLowerCase().includes(searchValue.toLocaleLowerCase())
+  );
 
   React.useEffect(() => {
     setIsLoading(true);
@@ -30,6 +42,7 @@ const Home = () => {
   }, [sort.sortType, categoryId]);
   return (
     <>
+      <Search value={searchValue} setValue={setSearchValue} />
       <div className={classes.top}>
         <Categories setCategoryHandler={(id) => setCategoryId(id)} />
         <Sort setSortHandler={(obj) => setSort(obj)} />
@@ -38,7 +51,7 @@ const Home = () => {
       <div className={classes.items}>
         {isLoading
           ? [...new Array(8)].map((_, index) => <PizzaSkeleton key={index} />)
-          : items.map((item) => <Pizza key={item.id} {...item} />)}
+          : filteredItems.map((item) => <Pizza key={item.id} {...item} />)}
       </div>
     </>
   );
