@@ -1,7 +1,10 @@
 import React from "react";
+import { useDispatch } from "react-redux";
+import { setSort } from "../../redux/slices/filterSlice";
 import classes from "./sort.module.scss";
 
-const Sort = ({ setSortHandler }) => {
+const Sort = () => {
+  const dispatch = useDispatch();
   const [isVisible, setVisible] = React.useState(false);
   const [selected, setSelected] = React.useState(0);
   const list = [
@@ -15,7 +18,7 @@ const Sort = ({ setSortHandler }) => {
   const currentItem = list[selected].name;
 
   const listItemsClickHandler = (index, obj) => {
-    setSortHandler(obj);
+    dispatch(setSort(obj));
     setSelected(index);
     setVisible(false);
   };

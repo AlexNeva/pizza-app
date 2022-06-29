@@ -1,4 +1,5 @@
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
 import {
   Categories,
   Sort,
@@ -10,15 +11,12 @@ import {
 import classes from "./home.module.scss";
 
 const Home = () => {
+  const { categoryId, sort } = useSelector((state) => state.filter);
+
   const [items, setItems] = React.useState([]);
   const [itemsCount, setItemsCount] = React.useState(0);
   const [isLoading, setIsLoading] = React.useState(true);
-  const [sort, setSort] = React.useState({
-    name: "популяности",
-    sortType: "rating",
-  });
   const [pageNum, setPageNum] = React.useState(1);
-  const [categoryId, setCategoryId] = React.useState(0);
 
   const [searchValue, setSearchValue] = React.useState("");
 
@@ -48,8 +46,8 @@ const Home = () => {
     <>
       <Search value={searchValue} setValue={setSearchValue} />
       <div className={classes.top}>
-        <Categories setCategoryHandler={(id) => setCategoryId(id)} />
-        <Sort setSortHandler={(obj) => setSort(obj)} />
+        <Categories />
+        <Sort />
       </div>
       <h1 className="pageTitle">Все пиццы</h1>
       <div className={classes.items}>

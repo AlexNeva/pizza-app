@@ -1,13 +1,11 @@
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { setCategoryId } from "../../redux/slices/filterSlice";
 import classes from "./categories.module.scss";
 
-const Categories = ({ setCategoryHandler }) => {
-  const [activeCategory, setActiveCategory] = React.useState(0);
-
-  const changeCategory = (idx) => {
-    setActiveCategory(idx);
-    setCategoryHandler(idx);
-  };
+const Categories = () => {
+  const activeCategory = useSelector((state) => state.filter.categoryId);
+  const dispatch = useDispatch();
 
   const categories = [
     "Все",
@@ -26,7 +24,7 @@ const Categories = ({ setCategoryHandler }) => {
           className={
             index === activeCategory ? classes.itemActive : classes.item
           }
-          onClick={() => changeCategory(index)}
+          onClick={() => dispatch(setCategoryId(index))}
         >
           {category}
         </li>
