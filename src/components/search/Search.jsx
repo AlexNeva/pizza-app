@@ -1,13 +1,28 @@
 import React from "react";
-import { useRef } from "react";
+import debounce from "lodash.debounce";
 import classes from "./search.module.scss";
 
 const Search = ({ value, setValue }) => {
-  const inputRef = useRef();
+  const inputRef = React.useRef();
+
+  const [localValue, setLocalValue] = React.useState("");
 
   const toClearInput = () => {
+    setLocalValue("");
     setValue("");
     inputRef.current.focus();
+  };
+
+  const updateInput = React.useCallback(
+    debounce((str) => {
+      setValue(str);
+    }, 500),
+    []
+  );
+
+  const onChangeInput = (e) => {
+    setLocalValue(e.target.value);
+    updateInput(localValue);
   };
 
   return (
@@ -20,13 +35,13 @@ const Search = ({ value, setValue }) => {
       <input
         ref={inputRef}
         className={classes.input}
-        value={value}
-        onChange={(e) => setValue(e.target.value)}
+        value={localValue}
+        onChange={onChangeInput}
         id="search"
         type="text"
         placeholder="Найти пиццу..."
       />
-      {value && (
+      {localValue && (
         <button className={classes.clear} type="button" onClick={toClearInput}>
           <svg width="20" height="20">
             <use href="/img/sprite.svg#clear"></use>
