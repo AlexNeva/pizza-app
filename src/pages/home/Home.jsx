@@ -1,3 +1,4 @@
+import axios from "axios";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -29,12 +30,12 @@ const Home = () => {
     const category = categoryId ? `category=${categoryId}` : "";
     const search = searchValue ? `title=${searchValue}&` : "";
 
-    fetch(
-      `https://62b208e0c7e53744afc67927.mockapi.io/items?${search}${category}&sortBy=${sortBy}&order=${order}&page=${pageNum}&limit=8`
-    )
-      .then((res) => res.json())
-      .then(({ items, count }) => {
-        console.log(items);
+    axios
+      .get(
+        `https://62b208e0c7e53744afc67927.mockapi.io/items?${search}${category}&sortBy=${sortBy}&order=${order}&page=${pageNum}&limit=8`
+      )
+      .then((res) => {
+        const { items, count } = res.data;
         setItems(items);
         setItemsCount(count);
         setIsLoading(false);
