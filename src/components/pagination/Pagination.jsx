@@ -1,10 +1,15 @@
 import React from "react";
 import ReactPaginate from "react-paginate";
+import { useDispatch, useSelector } from "react-redux";
+import { setCurrentPage } from "../../redux/slices/paginationSlice";
 import classes from "./pagination.module.scss";
 
-const Pagination = ({ pages, setPage }) => {
+const Pagination = () => {
+  const dispatch = useDispatch();
+  const { pagesCount } = useSelector((state) => state.pagination);
+
   const handlePageClick = (evt) => {
-    setPage(evt.selected + 1);
+    dispatch(setCurrentPage(evt.selected));
   };
   return (
     <ReactPaginate
@@ -13,7 +18,7 @@ const Pagination = ({ pages, setPage }) => {
       nextLabel=">"
       onPageChange={handlePageClick}
       pageRangeDisplayed={5}
-      pageCount={pages}
+      pageCount={pagesCount}
       previousLabel="<"
       renderOnZeroPageCount={null}
     />

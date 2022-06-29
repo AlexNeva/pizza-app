@@ -9,19 +9,18 @@ import {
   Search,
   Pagination,
 } from "../../components";
+import { setPagesCount } from "../../redux/slices/paginationSlice";
 import classes from "./home.module.scss";
 
 const Home = () => {
   const { categoryId, sort } = useSelector((state) => state.filter);
+  const { currentPage } = useSelector((state) => state.pagination);
+
+  const dispatch = useDispatch();
 
   const [items, setItems] = React.useState([]);
-  const [itemsCount, setItemsCount] = React.useState(0);
   const [isLoading, setIsLoading] = React.useState(true);
-  const [pageNum, setPageNum] = React.useState(1);
-
   const [searchValue, setSearchValue] = React.useState("");
-
-  const pagesCount = Math.ceil(itemsCount / 8);
 
   React.useEffect(() => {
     setIsLoading(true);
@@ -32,17 +31,17 @@ const Home = () => {
 
     axios
       .get(
-        `https://62b208e0c7e53744afc67927.mockapi.io/items?${search}${category}&sortBy=${sortBy}&order=${order}&page=${pageNum}&limit=8`
+        `https://62b208e0c7e53744afc67927.mockapi.io/items?${search}${category}&sortBy=${sortBy}&order=${order}&page=${currentPage}&limit=8`
       )
       .then((res) => {
         const { items, count } = res.data;
         setItems(items);
-        setItemsCount(count);
+        dispatch(setPagesCount(Math.ceil(count / 8)));
         setIsLoading(false);
       });
 
     window.scrollTo(0, 0);
-  }, [sort.sortType, categoryId, pageNum, searchValue]);
+  }, [sort.sortType, categoryId, currentPage, searchValue]);
   return (
     <>
       <Search value={searchValue} setValue={setSearchValue} />
@@ -56,7 +55,7 @@ const Home = () => {
           ? [...new Array(8)].map((_, index) => <PizzaSkeleton key={index} />)
           : items.map((item) => <Pizza key={item.id} {...item} />)}
       </div>
-      <Pagination pages={pagesCount} setPage={setPageNum} />
+      <Pagination />
     </>
   );
 };
