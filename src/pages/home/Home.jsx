@@ -9,12 +9,12 @@ import {
   Search,
   Pagination,
 } from "../../components";
-import { setPagesCount } from "../../redux/slices/paginationSlice";
+import { setPagesCount } from "../../redux/slices/filtersSlice";
 import classes from "./home.module.scss";
 
 const Home = () => {
   const { categoryId, sort } = useSelector((state) => state.filter);
-  const { currentPage } = useSelector((state) => state.pagination);
+  const { currentPage } = useSelector((state) => state.filter.pagination);
 
   const dispatch = useDispatch();
 
