@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-import { setSort } from "../../redux/slices/filtersSlice";
+import { setCurrentPage, setSort } from "../../redux/slices/filtersSlice";
 import classes from "./sort.module.scss";
 
 const Sort = () => {
@@ -19,6 +19,7 @@ const Sort = () => {
 
   const listItemsClickHandler = (index, obj) => {
     dispatch(setSort(obj));
+    dispatch(setCurrentPage(0));
     setSelected(index);
     setVisible(false);
   };

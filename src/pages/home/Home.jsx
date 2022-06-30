@@ -25,7 +25,7 @@ const Home = () => {
   React.useEffect(() => {
     setIsLoading(true);
     const sortBy = sort.sortType.replace("-", "");
-    const order = sort.sortType.includes("-") ? "asc" : "desc";
+    const order = sort.sortType.includes("-") ? "desc" : "asc";
     const category = categoryId ? `category=${categoryId}` : "";
     const search = searchValue ? `title=${searchValue}&` : "";
 

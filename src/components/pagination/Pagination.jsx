@@ -6,7 +6,9 @@ import classes from "./pagination.module.scss";
 
 const Pagination = () => {
   const dispatch = useDispatch();
-  const { pagesCount } = useSelector((state) => state.filter.pagination);
+  const { pagesCount, currentPage } = useSelector(
+    (state) => state.filter.pagination
+  );
 
   const handlePageClick = (evt) => {
     dispatch(setCurrentPage(evt.selected));
@@ -17,6 +19,7 @@ const Pagination = () => {
       breakLabel="..."
       nextLabel=">"
       onPageChange={handlePageClick}
+      forcePage={currentPage - 1}
       pageRangeDisplayed={5}
       pageCount={pagesCount}
       previousLabel="<"
