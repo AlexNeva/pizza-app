@@ -1,27 +1,34 @@
 import React from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { useLocationParams } from "../../hooks/useLocationParams";
 import { setCurrentPage, setSort } from "../../redux/slices/filtersSlice";
 import classes from "./sort.module.scss";
 
 const Sort = () => {
   const dispatch = useDispatch();
   const [isVisible, setVisible] = React.useState(false);
-  const [selected, setSelected] = React.useState(0);
+
+  const [params, setSearchParams] = useLocationParams();
+
+  const {
+    sort: { name, sortType, order },
+  } = useSelector((state) => state.filter);
+
   const list = [
-    { name: "↑ популярности", sortType: "rating" },
-    { name: "↓ популярности", sortType: "-rating" },
-    { name: "↑ цене", sortType: "price" },
-    { name: "↓ цене", sortType: "-price" },
-    { name: "↑ названию", sortType: "title" },
-    { name: "↓ названию", sortType: "-title" },
+    { name: "популярности", sortType: "rating", order: "asc" },
+    { name: "популярности", sortType: "rating", order: "desc" },
+    { name: "цене", sortType: "price", order: "asc" },
+    { name: "цене", sortType: "price", order: "desc" },
+    { name: "названию", sortType: "title", order: "asc" },
+    { name: "названию", sortType: "title", order: "desc" },
   ];
-  const currentItem = list[selected].name;
+
+  const arrow = (order) => (order === "asc" ? "↑" : "↓");
 
   const listItemsClickHandler = (index, obj) => {
     dispatch(setSort(obj));
-    dispatch(setCurrentPage(0));
-    setSelected(index);
     setVisible(false);
+    setSearchParams({ ...params, sortBy: obj.sortType, order: obj.order });
   };
 
   return (
@@ -40,18 +47,24 @@ const Sort = () => {
           />
         </svg>
         <b>Сортировка по:</b>
-        <span onClick={() => setVisible((open) => !open)}>{currentItem}</span>
+        <span onClick={() => setVisible((open) => !open)}>
+          {`${arrow(order)} ${name}`}
+        </span>
       </div>
       {isVisible && (
         <div className={classes.popup}>
           <ul>
             {list.map((obj, index) => (
               <li
-                key={obj.name}
-                className={selected === index ? classes.active : ""}
+                key={obj.name + obj.order}
+                className={
+                  sortType === obj.sortType && order === obj.order
+                    ? classes.active
+                    : ""
+                }
                 onClick={() => listItemsClickHandler(index, obj)}
               >
-                {obj.name}
+                {`${arrow(obj.order)} ${obj.name}`}
               </li>
             ))}
           </ul>

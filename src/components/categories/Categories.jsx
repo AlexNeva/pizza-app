@@ -1,5 +1,6 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useLocationParams } from "../../hooks/useLocationParams";
 import { setCategoryId, setCurrentPage } from "../../redux/slices/filtersSlice";
 import classes from "./categories.module.scss";
 
@@ -7,9 +8,11 @@ const Categories = () => {
   const activeCategory = useSelector((state) => state.filter.categoryId);
   const dispatch = useDispatch();
 
+  const [params, setSearchParams] = useLocationParams();
+
   const categoryClickHandler = (idx) => {
     dispatch(setCategoryId(idx));
-    dispatch(setCurrentPage(0));
+    setSearchParams({ ...params, category: idx });
   };
 
   const categories = [

@@ -5,11 +5,13 @@ const initialState = {
   sort: {
     name: "популяности",
     sortType: "rating",
+    order: "asc",
   },
   pagination: {
     pagesCount: 0,
     currentPage: 1,
   },
+  searchValue: "",
 };
 
 const filterSlice = createSlice({
@@ -18,9 +20,11 @@ const filterSlice = createSlice({
   reducers: {
     setCategoryId(state, action) {
       state.categoryId = action.payload;
+      state.pagination.currentPage = 1;
     },
     setSort(state, action) {
       state.sort = action.payload;
+      state.pagination.currentPage = 1;
     },
     setPagesCount(state, action) {
       state.pagination.pagesCount = action.payload;
@@ -28,10 +32,35 @@ const filterSlice = createSlice({
     setCurrentPage(state, action) {
       state.pagination.currentPage = action.payload + 1;
     },
+    setSearch(state, action) {
+      state.searchValue = action.payload;
+      state.pagination.currentPage = 1;
+    },
+    setFilters(state, action) {
+      const { category, sortBy, page, title } = action.payload;
+      state.categoryId = +category || initialState.categoryId;
+      state.sort.sortType = sortBy || initialState.sort.sortType;
+      state.pagination.currentPage =
+        +page || initialState.pagination.currentPage;
+      state.searchValue = title || initialState.searchValue;
+    },
+    resetFilters(state, action) {
+      state.categoryId = initialState.categoryId;
+      state.sort = initialState.sort;
+      state.pagination = initialState.pagination;
+      state.searchValue = initialState.searchValue;
+    },
   },
 });
 
-export const { setCategoryId, setSort, setPagesCount, setCurrentPage } =
-  filterSlice.actions;
+export const {
+  setCategoryId,
+  setSort,
+  setPagesCount,
+  setCurrentPage,
+  setSearch,
+  setFilters,
+  resetFilters,
+} = filterSlice.actions;
 
 export default filterSlice.reducer;
