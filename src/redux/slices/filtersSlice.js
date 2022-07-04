@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   categoryId: 0,
   sort: {
-    name: "популяности",
+    name: "популярности",
     sortType: "rating",
     order: "asc",
   },
@@ -23,6 +23,8 @@ const filterSlice = createSlice({
       state.pagination.currentPage = 1;
     },
     setSort(state, action) {
+      console.log(action.payload);
+
       state.sort = action.payload;
       state.pagination.currentPage = 1;
     },
@@ -37,9 +39,10 @@ const filterSlice = createSlice({
       state.pagination.currentPage = 1;
     },
     setFilters(state, action) {
-      const { category, sortBy, page, title } = action.payload;
+      const { category, sortBy, order, page, title } = action.payload;
       state.categoryId = +category || initialState.categoryId;
       state.sort.sortType = sortBy || initialState.sort.sortType;
+      state.sort.order = order || initialState.sort.order;
       state.pagination.currentPage =
         +page || initialState.pagination.currentPage;
       state.searchValue = title || initialState.searchValue;

@@ -1,7 +1,7 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocationParams } from "../../hooks/useLocationParams";
-import { setCurrentPage, setSort } from "../../redux/slices/filtersSlice";
+import { setSort } from "../../redux/slices/filtersSlice";
 import classes from "./sort.module.scss";
 
 const Sort = () => {
@@ -11,7 +11,7 @@ const Sort = () => {
   const [params, setSearchParams] = useLocationParams();
 
   const {
-    sort: { name, sortType, order },
+    sort: { sortType, order },
   } = useSelector((state) => state.filter);
 
   const list = [
@@ -24,6 +24,9 @@ const Sort = () => {
   ];
 
   const arrow = (order) => (order === "asc" ? "↑" : "↓");
+  const sortName = list.filter(
+    (obj) => obj.sortType === sortType && obj.order === order
+  )[0].name;
 
   const listItemsClickHandler = (index, obj) => {
     dispatch(setSort(obj));
@@ -48,7 +51,7 @@ const Sort = () => {
         </svg>
         <b>Сортировка по:</b>
         <span onClick={() => setVisible((open) => !open)}>
-          {`${arrow(order)} ${name}`}
+          {`${arrow(order)} ${sortName}`}
         </span>
       </div>
       {isVisible && (

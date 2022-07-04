@@ -2,7 +2,7 @@ import axios from "axios";
 import React from "react";
 import qs from "qs";
 import { useDispatch, useSelector } from "react-redux";
-import { useLocation, useSearchParams } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import {
   Categories,
   Sort,
@@ -27,8 +27,6 @@ const Home = () => {
 
   const location = useLocation();
 
-  const [_, setSearchParams] = useSearchParams();
-
   React.useEffect(() => {
     setIsLoading(true);
 
@@ -48,7 +46,15 @@ const Home = () => {
       });
 
     window.scrollTo(0, 0);
-  }, [sort.sortType, sort.order, categoryId, currentPage, searchValue]);
+  }, [
+    sort.sortType,
+    sort.order,
+    categoryId,
+    currentPage,
+    searchValue,
+    location.search,
+    dispatch,
+  ]);
 
   return (
     <>
