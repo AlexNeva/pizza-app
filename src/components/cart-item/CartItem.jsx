@@ -1,19 +1,24 @@
 import React from "react";
+import { useDispatch } from "react-redux";
+import { removeItem } from "../../redux/slices/cartSlice";
 import classes from "./cartItem.module.scss";
 
-const CartItem = () => {
+const CartItem = (item) => {
+  const { imageUrl, title, price, cartId } = item;
+
+  const dispatch = useDispatch();
+
+  const removePizza = (idx) => {
+    dispatch(removeItem(idx));
+  };
+
   return (
     <div className={classes.item}>
       <div className={classes.image}>
-        <img
-          width={80}
-          height={80}
-          src="https://dodopizza-a.akamaihd.net/static/Img/Products/Pizza/ru-RU/b750f576-4a83-48e6-a283-5a8efb68c35d.jpg"
-          alt="Pizza"
-        />
+        <img width={80} height={80} src={imageUrl} alt="Pizza" />
       </div>
       <div className={classes.info}>
-        <h3>Сырный цыпленок</h3>
+        <h3>{title}</h3>
         <p>тонкое тесто, 26 см.</p>
       </div>
       <div className={classes.count}>
@@ -30,9 +35,12 @@ const CartItem = () => {
         </button>
       </div>
       <div className={classes.price}>
-        <b>770 ₽</b>
+        <b>{price} ₽</b>
       </div>
-      <button className={classes.removeItem}>
+      <button
+        className={classes.removeItem}
+        onClick={() => removePizza(cartId)}
+      >
         <svg width="10" height="10">
           <use href="/img/sprite.svg#plus"></use>
         </svg>

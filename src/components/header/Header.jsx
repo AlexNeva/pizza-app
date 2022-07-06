@@ -1,8 +1,10 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import classes from "./header.module.scss";
 
 const Header = () => {
+  const { totalPrice, items } = useSelector((state) => state.cart);
   return (
     <div className={classes.header}>
       <div className={`${classes.container} container`}>
@@ -19,12 +21,12 @@ const Header = () => {
         </Link>
 
         <Link to="/cart" className={`${classes.cartBtn} button`}>
-          <span>520 ₽</span>
+          <span>{totalPrice} ₽</span>
           <div className={classes.cartBtnDelimitr}></div>
           <svg width="18" height="18">
             <use href="/img/sprite.svg#cart"></use>
           </svg>
-          <span>3</span>
+          <span>{items.length}</span>
         </Link>
       </div>
     </div>

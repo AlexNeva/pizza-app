@@ -73,6 +73,10 @@
     margin: 0 0.25em;
   }
 
+  &:disabled {
+    opacity: 0.3;
+  }
+
   &:hover {
     i {
       background-color: #fff;

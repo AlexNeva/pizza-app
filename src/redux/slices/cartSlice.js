@@ -18,10 +18,11 @@ const cartSlice = createSlice({
     },
     removeItem(state, action) {
       const id = action.payload;
-      state.items = state.items.filter((item) => item.id !== id);
+      state.items = state.items.filter((item) => item.cartId !== id);
     },
     clearItems(state, action) {
       state.items = [];
+      state.totalPrice = 0;
     },
   },
 });

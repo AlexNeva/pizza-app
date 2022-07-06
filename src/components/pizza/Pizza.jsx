@@ -1,12 +1,19 @@
+import debounce from "lodash.debounce";
 import React from "react";
+import uniqid from "uniqid";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { addItem } from "../../redux/slices/cartSlice";
 import classes from "./pizza.module.scss";
 
-const Pizza = ({ title, price, imageUrl }) => {
-  const [count, setCount] = React.useState(0);
+const Pizza = (item) => {
+  const dispatch = useDispatch();
+  const { title, price, imageUrl } = item;
 
-  const addPizza = () => {
-    setCount((prevCount) => (prevCount += 1));
-  };
+  const addPizza = debounce((pizza) => {
+    dispatch(addItem(pizza));
+  }, 250);
+
   return (
     <div className={classes.pizza}>
       <img
@@ -29,10 +36,10 @@ const Pizza = ({ title, price, imageUrl }) => {
         </ul>
       </div>
       <div className={classes.footer}>
-        <div className={classes.price}>от {price} ₽</div>
+        <div className={classes.price}>{price} ₽</div>
         <button
           className={`button button--outline ${classes.addBtn}`}
-          onClick={addPizza}
+          onClick={() => addPizza({ ...item, cartId: uniqid() })}
         >
           <svg
             width="12"
@@ -47,7 +54,6 @@ const Pizza = ({ title, price, imageUrl }) => {
             />
           </svg>
           <span>Добавить</span>
-          <i>{count}</i>
         </button>
       </div>
     </div>
