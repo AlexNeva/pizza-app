@@ -8,7 +8,6 @@ const initialState = {
     order: "asc",
   },
   pagination: {
-    pagesCount: 0,
     currentPage: 1,
   },
   searchValue: "",
@@ -27,9 +26,6 @@ const filterSlice = createSlice({
 
       state.sort = action.payload;
       state.pagination.currentPage = 1;
-    },
-    setPagesCount(state, action) {
-      state.pagination.pagesCount = action.payload;
     },
     setCurrentPage(state, action) {
       state.pagination.currentPage = action.payload + 1;
@@ -59,7 +55,6 @@ const filterSlice = createSlice({
 export const {
   setCategoryId,
   setSort,
-  setPagesCount,
   setCurrentPage,
   setSearch,
   setFilters,

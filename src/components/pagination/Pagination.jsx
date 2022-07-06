@@ -7,9 +7,10 @@ import classes from "./pagination.module.scss";
 
 const Pagination = () => {
   const dispatch = useDispatch();
-  const { pagesCount, currentPage } = useSelector(
-    (state) => state.filter.pagination
-  );
+  const { currentPage } = useSelector((state) => state.filter.pagination);
+  const { count } = useSelector((state) => state.items.data);
+
+  const pagesCount = Math.ceil(count / 8);
 
   const [params, setSearchParams] = useLocationParams();
 
