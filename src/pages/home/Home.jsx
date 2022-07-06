@@ -34,6 +34,11 @@ const Home = () => {
   React.useEffect(() => {
     dispatch(fetchItems());
 
+    if (location.search) {
+      const params = qs.parse(location.search.replace("?", ""));
+      dispatch(setFilters(params));
+    }
+
     window.scrollTo(0, 0);
   }, [
     sort.sortType,
