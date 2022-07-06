@@ -13,6 +13,7 @@ import {
 } from "../../components";
 import { setFilters, setPagesCount } from "../../redux/slices/filtersSlice";
 import classes from "./home.module.scss";
+import { fetchItems } from "../../redux/slices/itemsSlice";
 
 const Home = () => {
   const { categoryId, sort, searchValue } = useSelector(
@@ -28,6 +29,7 @@ const Home = () => {
   const location = useLocation();
 
   React.useEffect(() => {
+    dispatch(fetchItems());
     setIsLoading(true);
 
     axios
