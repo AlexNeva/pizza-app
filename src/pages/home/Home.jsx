@@ -19,33 +19,20 @@ const Home = () => {
   const { categoryId, sort, searchValue } = useSelector(
     (state) => state.filter
   );
+
+  const {
+    isLoading,
+    data: { items, count },
+    error,
+  } = useSelector((state) => state.items);
   const { currentPage } = useSelector((state) => state.filter.pagination);
 
   const dispatch = useDispatch();
-
-  const [items, setItems] = React.useState([]);
-  const [isLoading, setIsLoading] = React.useState(true);
 
   const location = useLocation();
 
   React.useEffect(() => {
     dispatch(fetchItems());
-    setIsLoading(true);
-
-    axios
-      .get(
-        `https://62b208e0c7e53744afc67927.mockapi.io/items?title=${searchValue}&category=${categoryId}&sortBy=${sort.sortType}&order=${sort.order}&page=${currentPage}&limit=8`
-      )
-      .then((res) => {
-        const { items, count } = res.data;
-        setItems(items);
-        dispatch(setPagesCount(Math.ceil(count / 8)));
-        setIsLoading(false);
-        if (location.search) {
-          const params = qs.parse(location.search.replace("?", ""));
-          dispatch(setFilters(params));
-        }
-      });
 
     window.scrollTo(0, 0);
   }, [

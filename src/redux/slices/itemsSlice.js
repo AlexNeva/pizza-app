@@ -3,7 +3,10 @@ import { itemsAPI } from "../../API/services/itemsService";
 
 const initialState = {
   isLoading: false,
-  data: [],
+  data: {
+    items: [],
+    count: 0,
+  },
   error: null,
 };
 
