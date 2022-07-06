@@ -22,7 +22,7 @@ const Home = () => {
 
   const {
     isLoading,
-    data: { items, count },
+    data: { items },
     error,
   } = useSelector((state) => state.items);
   const { currentPage } = useSelector((state) => state.filter.pagination);
