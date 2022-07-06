@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export const BASE_URL = "https://62b208e0c7e53744afc67927.mockapi.io";
+export const BASE_URL = "https://62b208e0c7e53744afc67927.mockapi.io/";
 
 const $http = axios.create({
   baseURL: BASE_URL,
